@@ -1,3 +1,11 @@
-export declare class AutentificacionService {
-    constructor();
+import { Persona } from '../models';
+import { PersonaRepository } from '../repositories';
+export declare class AutenticacionService {
+    personaRepository: PersonaRepository;
+    constructor(personaRepository: PersonaRepository);
+    GenerarClave(): any;
+    CifrarClave(clave: string): any;
+    identificarPersona(usuario: string, clave: string): false | Promise<(Persona & import("../models").PersonaRelations) | null>;
+    GenerarTokenJWT(persona: Persona): any;
+    ValidarTokenJWT(token: string): any;
 }

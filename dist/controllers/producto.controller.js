@@ -2,17 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductoController = void 0;
 const tslib_1 = require("tslib");
+const authentication_1 = require("@loopback/authentication");
 const repository_1 = require("@loopback/repository");
 const rest_1 = require("@loopback/rest");
 const models_1 = require("../models");
 const repositories_1 = require("../repositories");
+//esto es para darle derecho al administrador de solo etrar a esta clase
+//@authenticate("admin")
 let ProductoController = class ProductoController {
     constructor(productoRepository) {
         this.productoRepository = productoRepository;
     }
+    //esto es para darle derecho al administrador de solo etrar a esta clase
     async create(producto) {
         return this.productoRepository.create(producto);
     }
+    //aqui si si quiero que entren a estos metodos cualquiera
     async count(where) {
         return this.productoRepository.count(where);
     }
@@ -36,6 +41,7 @@ let ProductoController = class ProductoController {
     }
 };
 tslib_1.__decorate([
+    (0, authentication_1.authenticate)("admin"),
     (0, rest_1.post)('/productos'),
     (0, rest_1.response)(200, {
         description: 'Producto model instance',
@@ -56,6 +62,7 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", Promise)
 ], ProductoController.prototype, "create", null);
 tslib_1.__decorate([
+    authentication_1.authenticate.skip(),
     (0, rest_1.get)('/productos/count'),
     (0, rest_1.response)(200, {
         description: 'Producto model count',
@@ -103,6 +110,7 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", Promise)
 ], ProductoController.prototype, "updateAll", null);
 tslib_1.__decorate([
+    authentication_1.authenticate.skip(),
     (0, rest_1.get)('/productos/{id}'),
     (0, rest_1.response)(200, {
         description: 'Producto model instance',
